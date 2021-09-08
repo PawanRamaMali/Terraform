@@ -46,5 +46,27 @@ resource "aws_instance" "my-first-server" {
 
 ### Build a AWS VPC
 
-```
+```terraform
+provider "aws" {
+    region = "us-east-1"
+    access_key = ""
+    secret_key = ""
+}
+
+resource "aws_vpc" "my-first-vpc-1" {
+  cidr_block = "10.0.0.0/16"
+  tags = {
+    "Name" = "production"
+  }
+}
+
+resource "aws_subnet" "subnet-2" {
+  vpc_id = aws_vpc.my-first-vpc.id
+  cidr_block = "10.0.1.0/24"
+  tags = {
+    "Name" = "prod-subnet"
+  }
+}
+
+
 ```
