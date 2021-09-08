@@ -74,7 +74,7 @@ resource "aws_subnet" "subnet-2" {
 
 ### 1. Create VPC
 
-```
+```terraform
 resource "aws_vpc" "prod-vpc" {
   cidr_block = "10.0.0.0/16"
   tags = {
@@ -86,7 +86,7 @@ resource "aws_vpc" "prod-vpc" {
 
 ### 2. Create Internet Gateway
 
-```
+```terraform
 
 resource "aws_internet_gateway" "gw" {
   vpc_id = aws_vpc.prod-vpc.id
@@ -95,7 +95,7 @@ resource "aws_internet_gateway" "gw" {
 
 ### 3. Create Custom Route Table
 
-```
+```terraform
 resource "aws_route_table" "prod-route-table" {
   vpc_id = aws_vpc.prod-vpc.id
 
@@ -111,6 +111,20 @@ resource "aws_route_table" "prod-route-table" {
 
   tags = {
     Name = "Prod"
+  }
+}
+```
+
+### 4. Create a Subnet 
+
+```terraform
+resource "aws_subnet" "subnet-1" {
+  vpc_id            = aws_vpc.prod-vpc.id
+  cidr_block        = "10.0.1.0/24"
+  availability_zone = "us-east-1a"
+
+  tags = {
+    Name = "prod-subnet"
   }
 }
 ```
